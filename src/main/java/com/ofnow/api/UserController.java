@@ -1,6 +1,11 @@
 package com.ofnow.api;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Optional;
+
+import lombok.val;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,7 +14,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,13 +45,21 @@ public class UserController {
 	
 	@RequestMapping(value = "{uuid}", method = RequestMethod.GET)
 	public User get(String uuid) {
-		return service.findByUUID(uuid);
+		return service.findByUuid(uuid);
 	}
 	
-	@RequestMapping(value = "{uuid}", method = RequestMethod.PUT)
-	public User users(@PathVariable String uuid, @RequestBody User user) {
-		user.setUuid(uuid);
-		return service.update(user);
+	@RequestMapping(method = RequestMethod.PUT)
+	public User update(@RequestBody User data) {
+		Optional<User> value = Optional.of(service.findByUuid(data.getUuid()));
+		if(!value.isPresent()) {
+			return null;
+		}
+		User user = value.get();
+		user.setName(data.getName());
+		user.setInOffice(data.isInOffice());
+		user.setMail(data.getMail());
+		user.setUpdateTime(new Date());
+		return service.update(data);
 	}
 
 }

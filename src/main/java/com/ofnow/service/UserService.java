@@ -35,16 +35,17 @@ public class UserService {
 		return repositry.save(user);
 	}
 	
-	public User findByUUID(String uuid) {
-		return repositry.findByUUID(uuid);
+	public User findByUuid(String uuid) {
+		return repositry.findByUuid(uuid);
 	}
+	
 	/**
 	 * @return 使用されていないuuid
 	 */
 	private String generateUUID() {
 		while(true) {
 			String uuid = UUIDGenarator.randomUUID();
-			Optional<User> user = Optional.ofNullable(repositry.findByUUID(uuid));
+			Optional<User> user = Optional.ofNullable(repositry.findByUuid(uuid));
 			if(!user.isPresent()) {
 				return uuid;
 			}

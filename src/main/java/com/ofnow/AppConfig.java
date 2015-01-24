@@ -35,9 +35,6 @@ public class AppConfig {
             username = this.properties.getUsername();
             String propPassword = this.properties.getPassword();
             password = propPassword == null ? "" : propPassword;
-            System.out.println(url);
-            System.out.println(username);
-            System.out.println(password);
         }
 
         DataSourceBuilder factory = DataSourceBuilder
