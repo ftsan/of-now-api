@@ -21,11 +21,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "users")
 public class User {
+	@Id
+	@Column(nullable = false)
+	private String uuid;
 	@Column(nullable = false)
 	private String name;
-	@Column(nullable = false)
-	@Id
-	private String uuid;
 	@Column(nullable = false)
 	private String mail;
 	private boolean inOffice;
