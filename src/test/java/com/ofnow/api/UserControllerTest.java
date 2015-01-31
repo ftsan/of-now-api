@@ -91,14 +91,14 @@ public class UserControllerTest {
 	@Test
 	public void testCreate() {
 		String name = "test";
-		String string = "test@mail.com";
+		String mail = "test@mail.com";
 		boolean inOffice = true;
-		User u = new User(name, null, string, true, null, null);
+		User u = new User(null, name, mail, true, null, null);
 		ResponseEntity<User> response = restTemplate.exchange(endPoint, HttpMethod.POST, new HttpEntity<>(u), User.class);
 		assertThat(response.getStatusCode(), is(HttpStatus.CREATED));
 		User created = response.getBody();
 		assertThat(created.getName(), is(name));
-		assertThat(created.getMail(), is(string));
+		assertThat(created.getMail(), is(mail));
 		assertThat(created.isInOffice(), is(inOffice));
 		assertThat(restTemplate.exchange(
 				endPoint, HttpMethod.GET, null, 
