@@ -24,4 +24,4 @@ spring:
     jpa:
       database: POSTGRESQL
       hibernate:
-        ddl-auto: create-drop
+        ddl-auto: none
