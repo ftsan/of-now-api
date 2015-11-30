@@ -1,3 +1,7 @@
 build/
 \.*
 gradlew*
+*.iml
+*.ipr
+*.iws
+gradle/*
