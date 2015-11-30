@@ -1,10 +1,9 @@
+---
 spring:
   profiles:
-    ##
     active: dev
 ---
 spring:
-    ##
     profiles: dev
     datasource:
       driverClassName: org.postgresql.Driver
@@ -17,7 +16,6 @@ spring:
         ddl-auto: create-drop
 ---
 spring:
-    ##
     profiles: heroku
     datasource:
       driverClassName: org.postgresql.Driver

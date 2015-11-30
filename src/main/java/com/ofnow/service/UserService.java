@@ -10,17 +10,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ofnow.domain.User;
-import com.ofnow.repositry.UserRepositry;
+import com.ofnow.repositry.UserRepository;
 import com.ofnow.util.UUIDGenarator;
 
 @Service
 @Transactional
 public class UserService {
 	@Autowired
-	UserRepositry repositry;
+	UserRepository repository;
 	
 	public Page<User> findInOffice(Pageable pageable) {
-		return repositry.findInOffice(pageable);
+		return repository.findInOffice(pageable);
 	}
 	
 	public User create(User user) {
@@ -28,15 +28,15 @@ public class UserService {
 		Date now = new Date();
 		user.setCreateTime(now);
 		user.setUpdateTime(now);
-		return repositry.save(user);
+		return repository.save(user);
 	}
 	
 	public User update(User user) {
-		return repositry.save(user);
+		return repository.save(user);
 	}
 	
 	public User findByUuid(String uuid) {
-		return repositry.findByUuid(uuid);
+		return repository.findByUuid(uuid);
 	}
 	
 	/**
@@ -45,7 +45,7 @@ public class UserService {
 	private String generateUUID() {
 		while(true) {
 			String uuid = UUIDGenarator.randomUUID();
-			Optional<User> user = Optional.ofNullable(repositry.findByUuid(uuid));
+			Optional<User> user = Optional.ofNullable(repository.findByUuid(uuid));
 			if(!user.isPresent()) {
 				return uuid;
 			}

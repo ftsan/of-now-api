@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.ofnow.domain.User;
 
-public interface UserRepositry extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<User, Integer> {
 
 	@Query("SELECT u FROM User u WHERE u.inOffice = true ORDER BY u.updateTime DESC")
 	public Page<User> findInOffice(Pageable pageable);

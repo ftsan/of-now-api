@@ -1,11 +1,8 @@
 package com.ofnow.api;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
-
-import lombok.val;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,16 +24,16 @@ import com.ofnow.service.UserService;
 @RequestMapping("api/users")
 public class UserController {
 	@Autowired
-	UserService service;
+	UserService userService;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public Page<User> getInOfficeUser(@PageableDefault Pageable pageable) {
-		return service.findInOffice(pageable);
+		return userService.findInOffice(pageable);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<User> create(@RequestBody User user, UriComponentsBuilder builder) {
-		User created = service.create(user);
+		User created = userService.create(user);
 		URI location = builder.path("api/users/{uuid}").buildAndExpand(created.getUuid()).toUri();
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(location);
@@ -45,12 +42,12 @@ public class UserController {
 	
 	@RequestMapping(value = "{uuid}", method = RequestMethod.GET)
 	public User get(String uuid) {
-		return service.findByUuid(uuid);
+		return userService.findByUuid(uuid);
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT)
 	public User update(@RequestBody User data) {
-		Optional<User> value = Optional.of(service.findByUuid(data.getUuid()));
+		Optional<User> value = Optional.of(userService.findByUuid(data.getUuid()));
 		if(!value.isPresent()) {
 			return null;
 		}
@@ -59,7 +56,7 @@ public class UserController {
 		user.setInOffice(data.isInOffice());
 		user.setMail(data.getMail());
 		user.setUpdateTime(new Date());
-		return service.update(data);
+		return userService.update(data);
 	}
 
 }

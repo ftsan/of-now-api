@@ -32,7 +32,7 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ofnow.App;
 import com.ofnow.domain.User;
-import com.ofnow.repositry.UserRepositry;
+import com.ofnow.repositry.UserRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = App.class)
@@ -40,7 +40,7 @@ import com.ofnow.repositry.UserRepositry;
 @IntegrationTest({"server.port:0", "spring.datasource.url:jdbc:h2:mem:bookmark;DB_CLOSE_ON_EXIT=FALSE"})
 public class UserControllerTest {
 	@Autowired
-	UserRepositry userRepositry;
+	UserRepository userRepositry;
 	
 	@Value("${local.server.port}")
 	int port;
