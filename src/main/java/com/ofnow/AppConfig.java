@@ -1,18 +1,27 @@
 package com.ofnow;
 
-import net.sf.log4jdbc.Log4jdbcProxyDataSource;
+import com.ofnow.api.UserController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.sql.DataSource;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import static springfox.documentation.builders.PathSelectors.regex;
+
 @Configuration
+@EnableSwagger2
+@ComponentScan(basePackageClasses = {
+        UserController.class
+})
 public class AppConfig {
     @Autowired
     DataSourceProperties properties;
@@ -47,7 +56,14 @@ public class AppConfig {
     }
 
     @Bean
-    DataSource dataSource() {
-        return new Log4jdbcProxyDataSource(this.dataSource);
+    public Docket userApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .paths(regex("/api/users.*"))
+                .build();
     }
+//    @Bean
+//    DataSource dataSource() {
+//        return new Log4jdbcProxyDataSource(this.dataSource);
+//    }
 }
